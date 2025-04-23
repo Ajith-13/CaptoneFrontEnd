@@ -1,18 +1,42 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../Services/auth.service';
+import { NavbarComponent } from '../../../components/navbar/navbar.component';
 
 @Component({
   selector: 'app-usersignin',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,NavbarComponent],
   templateUrl: './usersignin.component.html',
   styleUrl: './usersignin.component.css'
 })
+
 export class UsersigninComponent {
-  router=inject(Router)
-  onLearnernavigation(){
+  formData = {
+    email: '',
+    password: ''
+  };
+  errorMessage = '';
+
+  constructor(private authService: AuthService, private router: Router) {}
+  onuserLogin() {
+    const loginPayload = {
+      email: this.formData.email,
+      password: this.formData.password
+    };
+    console.log(this.formData);
+    this.authService.login(loginPayload).subscribe({
     
-    this.router.navigateByUrl('lerner-navigation')
+      next: (response) => {
+        console.log('Login successful', response);
+
+        alert("Login successfull");
+      },
+      error: (error) => {
+        console.error('Login failed', error);
+        this.errorMessage = 'Invalid username/email or password.';
+      },
+    });
   }
 }

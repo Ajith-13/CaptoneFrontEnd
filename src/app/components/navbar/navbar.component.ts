@@ -1,16 +1,14 @@
 import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NavbarComponent } from '../../../components/navbar/navbar.component';
 
 @Component({
-  selector: 'app-welcomepage',
+  selector: 'app-navbar',
   standalone: true,
-  imports: [FormsModule,NavbarComponent],
-  templateUrl: './welcomepage.component.html',
-  styleUrl: './welcomepage.component.css'
+  imports: [],
+  templateUrl: './navbar.component.html',
+  styleUrl: './navbar.component.css'
 })
-export class WelcomepageComponent {
+export class NavbarComponent {
   router=inject(Router)
   onLogin(){
     
