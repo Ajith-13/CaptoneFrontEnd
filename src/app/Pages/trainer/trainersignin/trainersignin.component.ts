@@ -14,4 +14,7 @@ export class TrainersigninComponent {
   trainerRegister(){
     this.router.navigateByUrl('trainer-signup')
   }
+  trainerPage(){
+    this.router.navigateByUrl('Trainermainpage')
+  }
 }

@@ -7,6 +7,7 @@ import { AdministratorloginComponent } from './Pages/administrator/administrator
 import { TrainersigninComponent } from './Pages/trainer/trainersignin/trainersignin.component';
 import { TrainersignupComponent } from './Pages/trainer/trainersignup/trainersignup.component';
 import { NavigationpageComponent } from './Pages/homepage/navigationpage/navigationpage.component';
+import { TrainerHomepageComponent } from './Pages/trainer/trainer-homepage/trainer-homepage.component';
 
 
 export const routes: Routes = [
@@ -42,6 +43,10 @@ export const routes: Routes = [
   {
     path: 'lerner-navigation',
      component: NavigationpageComponent
+  },
+  {
+    path: 'Trainermainpage',
+     component: TrainerHomepageComponent
   }
   
 ];
