@@ -7,6 +7,8 @@ import { AdministratorloginComponent } from './Pages/administrator/administrator
 import { TrainersigninComponent } from './Pages/trainer/trainersignin/trainersignin.component';
 import { TrainersignupComponent } from './Pages/trainer/trainersignup/trainersignup.component';
 import { NavigationpageComponent } from './Pages/homepage/navigationpage/navigationpage.component';
+import { LandingPageComponent } from './Pages/administrator/landing-page/landing-page.component';
+import { adminAuthGuard } from './guards/admin-auth.guard';
 import { TrainerHomepageComponent } from './Pages/trainer/trainer-homepage/trainer-homepage.component';
 
 
@@ -43,10 +45,6 @@ export const routes: Routes = [
   {
     path: 'lerner-navigation',
      component: NavigationpageComponent
-  },
-  {
-    path: 'Trainermainpage',
-     component: TrainerHomepageComponent
   }
   
 ];

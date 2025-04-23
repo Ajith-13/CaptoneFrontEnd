@@ -1,9 +1,13 @@
+<app-navbar></app-navbar>
+<div class="alert alert-danger alert-dismissible fade show" id="alertMessage" style="display:none;">
+  <strong id="alertTitle"></strong> <span id="alertText"></span>
+</div>
 <div class="form-container">
     <h2>Trainer Login</h2>
-    <form>
-      <input type="email" placeholder="Email ID" required>
-      <input type="password" placeholder="Password" required>
-      <button type="submit" (click)="trainerPage()">Submit</button>
+    <form (ngSubmit)="onTrainerLogin()">
+      <input type="email" name="email" [(ngModel)]="formData.email" placeholder="Email ID" required>
+      <input type="password" name="password" [(ngModel)]="formData.password" placeholder="Password" required>
+      <button type="submit">Submit</button>
     </form>
   
     <div class="separator">or</div>
