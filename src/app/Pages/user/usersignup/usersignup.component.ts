@@ -3,11 +3,12 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NavbarComponent } from '../../../components/navbar/navbar.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-usersignup',
   standalone: true,
-  imports: [FormsModule,NavbarComponent],
+  imports: [FormsModule,NavbarComponent,CommonModule],
   templateUrl: './usersignup.component.html',
   styleUrls: ['./usersignup.component.css']  // Corrected styleUrl to styleUrls
 })
@@ -19,6 +20,8 @@ export class UsersignupComponent {
     email: '',
     password: ''
   };
+
+  formError: string | null = null;
 
   // Show custom alert with dynamic error message
   showErrorAlert(title: string, message: string) {
@@ -55,17 +58,19 @@ export class UsersignupComponent {
     }, 3000);
   }
   onuserRegister() {
-    const registerPayload = {
-      userName: this.formData.username,
-      email: this.formData.email,
-      password: this.formData.password
-    };
-
+    if (!this.formData.username || !this.formData.email || !this.formData.password) {
+      this.formError = 'All fields are required!';
+      return;
+    }
+    const registerPayload = new FormData();
+    registerPayload.append('UserName', this.formData.username);
+    registerPayload.append('Email', this.formData.email);
+    registerPayload.append('Password', this.formData.password);
+  
     this.http.post('http://localhost:7266/api/Auth/register/learner', registerPayload, { responseType: 'text' })
       .subscribe({
         next: (response) => {
           console.log(response);
-          // You can navigate after successful registration
           this.showSuccessAlert('Registration successful!', 'You are registered successfully! Please log in.');
           setTimeout(() => {
             this.router.navigateByUrl('/login');
@@ -73,15 +78,11 @@ export class UsersignupComponent {
         },
         error: (err) => {
           console.error('Registration failed', err);
-
-          // Get the error message from the response or default message
           const errorMessage = err?.error || 'An unexpected error occurred. Please try again later.';
-
-          // Show the error message in the custom alert box
-          // alert(errorMessage);
           this.showErrorAlert('Failed!', errorMessage);
           console.error('Error details:', err?.error);
         }
       });
   }
+  
 }

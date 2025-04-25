@@ -37,4 +37,14 @@
   button:hover {
     background-color: #218838;
   }
+  .error {
+    color: red;
+    font-size: 0.9em;
+    margin: 2px 0 10px 0;
+  }
+  
+  input.ng-invalid.ng-touched {
+    border: 1px solid red;
+  }
+  
   

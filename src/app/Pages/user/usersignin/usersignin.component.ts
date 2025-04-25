@@ -19,19 +19,21 @@ export class UsersigninComponent {
   };
   errorMessage = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private userLoginService: AuthService, private router: Router) {}
   onuserLogin() {
     const loginPayload = {
       email: this.formData.email,
       password: this.formData.password
     };
     console.log(this.formData);
-    this.authService.login(loginPayload).subscribe({
+    this.userLoginService.login(loginPayload,"user").subscribe({
     
       next: (response) => {
         console.log('Login successful', response);
 
         alert("Login successfull");
+        this.router.navigateByUrl('/user-landingpage');
+
       },
       error: (error) => {
         console.error('Login failed', error);

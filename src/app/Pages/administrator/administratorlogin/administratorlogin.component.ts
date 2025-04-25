@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { AdminloginService } from '../../../Services/admin/adminlogin.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from '../../../components/navbar/navbar.component';
+import { AuthService } from '../../../Services/auth.service';
 
 @Component({
   selector: 'app-administratorlogin',
@@ -34,7 +34,7 @@ export class AdministratorloginComponent {
   }
   
   errorMessage = '';
-  constructor(private adminService: AdminloginService, private router: Router) {}
+  constructor(private adminService: AuthService, private router: Router) {}
   onadminLogin() {
     // alert(this.formData);
     const loginPayload = {
@@ -42,7 +42,7 @@ export class AdministratorloginComponent {
       password: this.formData.password
     };
     console.log(this.formData);
-    this.adminService.login(loginPayload).subscribe({
+    this.adminService.login(loginPayload,'admin').subscribe({
     
       next: (response) => {
         console.log('Login successful', response);

@@ -1,14 +1,13 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NavbarComponent } from '../../../components/navbar/navbar.component';
 import { AuthService } from '../../../Services/auth.service';
-import { TrainerloginService } from '../../../Services/trainer/trainerlogin.service';
+import { NavbarComponent } from '../../../components/navbar/navbar.component';
 
 @Component({
   selector: 'app-trainersignin',
   standalone: true,
-  imports: [FormsModule,NavbarComponent],
+  imports: [FormsModule, NavbarComponent],
   templateUrl: './trainersignin.component.html',
   styleUrl: './trainersignin.component.css'
 })
@@ -17,55 +16,46 @@ export class TrainersigninComponent {
     email: '',
     password: ''
   };
-  errorMessage = ''; // Used to display error messages
+  errorMessage = '';
 
-  constructor(private trainerLoginService: TrainerloginService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
-  // Method to handle trainer login
   onTrainerLogin() {
-    const loginPayload = {
-      email: this.formData.email,
-      password: this.formData.password
-    };
-    console.log(this.formData);
-
-    // Call the login method from TrainerloginService
-    this.trainerLoginService.login(loginPayload).subscribe({
+    // console.log('Calling login method');
+    // alert("logggg");
+    this.authService.login(this.formData, 'trainer').subscribe({
       next: (response) => {
-        console.log('Login successful', response);
-        alert('Login successful');
-        this.router.navigateByUrl('/trainer-dashboard'); // Redirect to trainer dashboard after successful login
+        // console.log('Login successful', response);
+        const role = this.authService.getUserRole();
+        // alert(role);
+        console.log("role"+role);
+        if (role === 'TRAINER') {
+          this.router.navigate(['/trainerlandingpage']);
+        } else {
+          this.showAlert('Unauthorized', 'You are not allowed to access this page.');
+          this.authService.removeToken();
+        }
       },
       error: (err) => {
-        console.error('Login failed', err);
-        if (err.error && err.error.message) { 
-          // Display custom error message from backend (e.g., "Trainer approval pending")
-          this.showAlert('Failed', err.error.message);
-        } else {
-          // Show a generic error message for unexpected issues
-          this.showAlert('Failed', 'An unexpected error occurred. Please try again.');
-        }
+        this.showAlert('Login Failed', err.error?.message || 'An unexpected error occurred.');
       }
     });
   }
 
-  // Method to navigate to the trainer registration page
   trainerRegister() {
     this.router.navigateByUrl('trainer-signup');
   }
 
-  // Method to show alerts on the frontend
   showAlert(title: string, message: string) {
-    document.getElementById('alertTitle')!.innerText = title;
-    document.getElementById('alertText')!.innerHTML = message; // Use innerHTML to allow line breaks
+    const titleElement = document.getElementById('alertTitle');
+    const messageElement = document.getElementById('alertText');
+    const alertBox = document.getElementById('alertMessage');
 
-    // Show the alert
-    const alertElement = document.getElementById('alertMessage')!;
-    alertElement.style.display = 'block';
-
-    // Optionally, hide the alert after a few seconds
-    setTimeout(() => {
-      alertElement.style.display = 'none';
-    }, 5000); // Hide after 5 seconds
+    if (titleElement && messageElement && alertBox) {
+      titleElement.innerText = title;
+      messageElement.innerHTML = message;
+      alertBox.style.display = 'block';
+      setTimeout(() => alertBox.style.display = 'none', 5000);
+    }
   }
 }

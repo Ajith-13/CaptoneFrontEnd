@@ -1,26 +1,55 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { AuthService } from '../../Services/auth.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, RouterModule],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
-  router=inject(Router)
-  onLogin(){
-    
-    this.router.navigateByUrl('login')
+export class NavbarComponent implements OnInit, OnChanges {
+  isLoggedIn = false;
+  role: string | null = null;
+  userName: string | null = null;
+
+  constructor(private authService: AuthService, private router: Router) {
+    console.log('NavbarComponent constructor called');
   }
-  onRegister(){
-    this.router.navigateByUrl('register')
+
+  ngOnInit(): void {
+    console.log('Navbar component initialized');
+    this.checkAuth();
   }
-  admin(){
-    this.router.navigateByUrl('administrator')
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('Navbar component changes detected', changes);
+    this.checkAuth();
   }
-  trainerlogin(){
-    this.router.navigateByUrl('trainer-signin') 
+
+  checkAuth(): void {
+    this.isLoggedIn = this.authService.isAuthenticated();
+    this.role = this.authService.getUserRole();
+    // alert('Role: ' + this.role);
+    this.userName = this.authService.getUserName();
   }
+
+  trainerLogin(): void {
+    this.router.navigate(['/trainer-signin']);
+  }
+
+  adminLogin(): void {
+    this.router.navigate(['/administrator']);
+  }
+
+  logout(): void {
+    this.authService.removeToken();
+    this.isLoggedIn = false;
+    this.role = null;
+    this.userName = null;
+    this.router.navigate(['/welcome']);
+    }
 }
