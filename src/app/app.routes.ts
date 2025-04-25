@@ -15,6 +15,8 @@ import { ContactComponent } from './Pages/homepage/navigationpage/contact/contac
 import { AboutUsComponent } from './Pages/homepage/navigationpage/about-us/about-us.component';
 import { TrainerlandingpageComponent } from './Pages/trainer/trainerlandingpage/trainerlandingpage.component';
 import { authGuard } from './guards/auth-guard.guard';
+import { AddcourseComponent } from './Pages/trainer/addcourse/addcourse.component';
+import { ViewcourseComponent } from './Pages/trainer/viewcourse/viewcourse.component';
 
 
 export const routes: Routes = [
@@ -74,6 +76,18 @@ export const routes: Routes = [
     { 
       path: 'trainerlandingpage', 
       component: TrainerlandingpageComponent,
+      canActivate: [authGuard],  // Use the authGuard here for trainers
+      data: { role: 'TRAINER' }  // This route is for Trainer users only
+    },
+    { 
+      path: 'addcourse', 
+      component: AddcourseComponent,
+      canActivate: [authGuard],  // Use the authGuard here for trainers
+      data: { role: 'TRAINER' }  // This route is for Trainer users only
+    },
+    { 
+      path: 'viewcourse', 
+      component: ViewcourseComponent,
       canActivate: [authGuard],  // Use the authGuard here for trainers
       data: { role: 'TRAINER' }  // This route is for Trainer users only
     }

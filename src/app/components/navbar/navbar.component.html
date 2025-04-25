@@ -15,7 +15,9 @@
     <a *ngIf="role === 'ADMIN'" routerLink="/admin-trainer-approve" routerLinkActive="active-link">Approve Trainers</a>
 
     <!-- Trainer Only -->
-    <a *ngIf="role === 'TRAINER'" routerLink="/trainer/add-course" routerLinkActive="active-link">Add Course</a>
+    <a *ngIf="role === 'TRAINER'" routerLink="/addcourse" routerLinkActive="active-link">Add Course</a>
+    <a *ngIf="role === 'TRAINER'" routerLink="/viewcourse" routerLinkActive="active-link">View Courses</a>
+
   </div>
 
   <div class="nav-buttons">
