@@ -58,4 +58,7 @@ export class TrainersigninComponent {
       setTimeout(() => alertBox.style.display = 'none', 5000);
     }
   }
+  trainerPage(){
+    this.router.navigateByUrl('Trainermainpage')
+  }
 }
