@@ -17,6 +17,15 @@ import { TrainerlandingpageComponent } from './Pages/trainer/trainerlandingpage/
 import { authGuard } from './guards/auth-guard.guard';
 import { AddcourseComponent } from './Pages/trainer/addcourse/addcourse.component';
 import { ViewcourseComponent } from './Pages/trainer/viewcourse/viewcourse.component';
+import { AddmoduleComponent } from './Pages/trainer/addmodule/addmodule.component';
+import { ViewmoduleComponent } from './Pages/trainer/viewmodule/viewmodule.component';
+import { AddassignmentquestionComponent } from './Pages/trainer/addassignmentquestion/addassignmentquestion.component';
+import { SinglemoduleComponent } from './Pages/trainer/singlemodule/singlemodule.component';
+import { ViewcoursesComponent } from './Pages/user/viewcourses/viewcourses.component';
+import { ViewmodulesComponent } from './Pages/user/viewmodules/viewmodules.component';
+import { SinglemodulesComponent } from './Pages/user/singlemodules/singlemodules.component';
+import { ReviewassignmentComponent } from './Pages/trainer/reviewassignment/reviewassignment.component';
+import { AssignmentsubmittedComponent } from './Pages/user/assignmentsubmitted/assignmentsubmitted.component';
 
 
 export const routes: Routes = [
@@ -41,6 +50,10 @@ export const routes: Routes = [
       path: 'trainer-signin',
       component: TrainersigninComponent
     },
+    { 
+      path: 'trainer-signup',
+      component: TrainersignupComponent
+    },
     {
       path: 'admin-landingpage',
       component: LandingPageComponent,
@@ -57,7 +70,7 @@ export const routes: Routes = [
       path: 'user-landingpage',
       component: UserlandingPageComponent,
       canActivate: [authGuard],  // Use the authGuard here for users
-      data: { role: 'USER' }  // This route is for User role only
+      data: { role: 'LEARNER' }  // This route is for User role only
     },
     { 
       path: 'trainer-details/:id', 
@@ -90,5 +103,60 @@ export const routes: Routes = [
       component: ViewcourseComponent,
       canActivate: [authGuard],  // Use the authGuard here for trainers
       data: { role: 'TRAINER' }  // This route is for Trainer users only
+    },
+    { 
+      path: 'addmodule', 
+      component: AddmoduleComponent,
+      canActivate: [authGuard],  // Use the authGuard here for trainers
+      data: { role: 'TRAINER' }  // This route is for Trainer users only
+    },
+    { 
+      path: 'trainer/modules/:courseId', 
+      component: ViewmoduleComponent,
+      canActivate: [authGuard],  // Use the authGuard here for trainers
+      data: { role: 'TRAINER' }  // This route is for Trainer users only
+    },
+    { 
+      path: 'addassignmentquestion', 
+      component: AddassignmentquestionComponent,
+      canActivate: [authGuard],  // Use the authGuard here for trainers
+      data: { role: 'TRAINER' }  // This route is for Trainer users only
+    },
+    { 
+      path: 'singlemodule/:id', 
+      component: SinglemoduleComponent,
+      canActivate: [authGuard],  // Use the authGuard here for trainers
+      data: { role: 'TRAINER' }  // This route is for Trainer users only
+    },
+    {
+      path: 'viewcourses',
+      component: ViewcoursesComponent,
+      canActivate: [authGuard],  // Use the authGuard here for users
+      data: { role: 'LEARNER' }  // This route is for User role only
+    },
+    {
+      path: 'usermodule/:courseId',
+      component: ViewmodulesComponent,
+      canActivate: [authGuard],  // Use the authGuard here for users
+      data: { role: 'LEARNER' }  // This route is for User role only
+    },
+    {
+      path: 'usersinglemodules/:moduleId',
+      component: SinglemodulesComponent,
+      canActivate: [authGuard],
+      data: { role: 'LEARNER' }
+    },
+    { 
+      path: 'reviewassignment', 
+      component: ReviewassignmentComponent,
+      canActivate: [authGuard],  // Use the authGuard here for trainers
+      data: { role: 'TRAINER' }  // This route is for Trainer users only
+    },
+    {
+      path: 'submittedassignment',
+      component: AssignmentsubmittedComponent,
+      canActivate: [authGuard],
+      data: { role: 'LEARNER' }
     }
+    
   ];

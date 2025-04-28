@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
-import { NavbarComponent } from '../../../components/navbar/navbar.component';
+import { NavbarComponent } from "../../../components/navbar/navbar.component";
 import { ViewCourseService } from '../../../Services/trainer/view-course.service';
 import { AuthService } from '../../../Services/auth.service';
-import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-viewcourse',
+  selector: 'app-viewcourses',
   standalone: true,
-  imports: [NavbarComponent,CommonModule,RouterModule],
-  templateUrl: './viewcourse.component.html',
-  styleUrl: './viewcourse.component.css'
+  imports: [NavbarComponent,RouterModule,CommonModule],
+  templateUrl: './viewcourses.component.html',
+  styleUrl: './viewcourses.component.css'
 })
-export class ViewcourseComponent {
+export class ViewcoursesComponent {
   courses: any[] = [];
   loading = false;
   errorMessage: string = '';
@@ -29,15 +29,15 @@ export class ViewcourseComponent {
   // Fetch courses created by the logged-in trainer
   fetchCourses() {
     this.loading = true;
-    const trainerId = this.authService.getToken(); // Extract trainerId from the JWT token
-    console.log("from course view"+trainerId);
-    if (!trainerId) {
+    const userId = this.authService.getToken(); // Extract trainerId from the JWT token
+    console.log("from course view"+userId);
+    if (!userId) {
       this.errorMessage = 'Trainer not authenticated.';
       this.loading = false;
       return;
     }
 
-    this.courseService.getCoursesByTrainer().subscribe(
+    this.courseService.getAllCourses().subscribe(
       (response) => {
         this.courses = response.data; // Assuming response has a data field with courses
         console.log(this.courses);

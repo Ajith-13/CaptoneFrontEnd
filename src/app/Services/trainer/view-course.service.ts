@@ -8,7 +8,9 @@ import { AuthService } from '../auth.service';
 })
 export class ViewCourseService {
 
-  private apiUrl = 'http://localhost:5276/api/Course/trainer'; // Replace with your API URL
+  private apiUrl = 'http://localhost:5276/api/Course/trainer';
+  private url = 'http://localhost:5276/api/Course'; // Replace with your API URL
+  
 
   constructor(private http: HttpClient,private authService:AuthService) {}
 
@@ -23,4 +25,16 @@ export class ViewCourseService {
 
     return this.http.get<any>(`${this.apiUrl}`, { headers });
   }
+  getAllCourses(): Observable<any> {
+    const token = this.authService.getToken(); // Retrieve JWT token from localStorage or sessionStorage
+    if (!token) {
+      throw new Error('No token found');
+    }
+  
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  
+    // Assuming your API endpoint for getting all courses is something like '/courses'
+    return this.http.get<any>(`${this.url}/`, { headers });
+  }
+  
 }

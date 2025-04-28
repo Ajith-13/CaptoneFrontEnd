@@ -16,7 +16,14 @@
 
     <!-- Trainer Only -->
     <a *ngIf="role === 'TRAINER'" routerLink="/addcourse" routerLinkActive="active-link">Add Course</a>
-    <a *ngIf="role === 'TRAINER'" routerLink="/viewcourse" routerLinkActive="active-link">View Courses</a>
+    <a *ngIf="role === 'TRAINER'" routerLink="/viewcourse" routerLinkActive="active-link">Preview</a>
+    <a *ngIf="role === 'TRAINER'" routerLink="/addmodule" routerLinkActive="active-link">Add Module</a>
+    <a *ngIf="role === 'TRAINER'" routerLink="/addassignmentquestion" routerLinkActive="active-link">Add Assignment</a>
+    <a *ngIf="role === 'TRAINER'" routerLink="/reviewassignment" routerLinkActive="active-link">Review Assignment</a>
+
+
+    <a *ngIf="role === 'LEARNER'" routerLink="/viewcourses" routerLinkActive="active-link">Courses</a>
+    <a *ngIf="role === 'LEARNER'" routerLink="/submittedassignment" routerLinkActive="active-link">Assessments</a>
 
   </div>
 
